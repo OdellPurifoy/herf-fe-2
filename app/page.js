@@ -21,6 +21,7 @@ export default function Home() {
 
   return (
     <div>
+      <h1>NavBar</h1>
       {data.lounges.data.map((lounge) => (
         <div key={lounge.attributes.id}>
           <h2>{lounge.attributes.name}</h2>
