@@ -15,7 +15,7 @@ const LoginPage = () => {
       // Redirect on successful login
       // You can use Next.js router or other navigation methods here
       // Example using Next.js router:
-      // router.push('/dashboard');
+      router.push('/');
     } catch (error) {
       console.error('Login error:', error);
     }
