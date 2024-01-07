@@ -3,18 +3,17 @@
 // pages/login.js
 import { useState } from 'react';
 import { useAuth } from '../AuthContext';
+import { useRouter } from 'next/navigation'
 
 const LoginPage = () => {
   const { login } = useAuth();
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  const router = useRouter()
 
   const handleLogin = async () => {
     try {
       await login(email, password);
-      // Redirect on successful login
-      // You can use Next.js router or other navigation methods here
-      // Example using Next.js router:
       router.push('/');
     } catch (error) {
       console.error('Login error:', error);

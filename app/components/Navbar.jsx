@@ -1,5 +1,8 @@
 "use client";
+import Link from 'next/link';
+import { useRouter } from 'next/navigation'
 
+import { useAuth } from '../AuthContext';
 import {
   Box,
   Flex,
@@ -25,6 +28,15 @@ import {
 
 export default function WithSubnavigation() {
   const { isOpen, onToggle } = useDisclosure();
+  const { user, logout } = useAuth();
+  const router = useRouter();
+
+  console.log("USER AVAILABLE IN NAV", user);
+
+  const handleLogout = async () => {
+    await logout();
+    router.push('/logout')
+  };
 
   return (
     <Box>
@@ -73,15 +85,20 @@ export default function WithSubnavigation() {
           direction={"row"}
           spacing={6}
         >
-          <Button
-            as={"a"}
-            fontSize={"sm"}
-            fontWeight={400}
-            variant={"link"}
-            href={"#"}
-          >
-            Sign In
+          {user ? (
+          // Show logout button if the user is signed in
+          <Button onClick={handleLogout} fontSize={"sm"} fontWeight={400} variant={"link"}>
+            Logout
           </Button>
+        ) : (
+          // Show login button if the user is not signed in
+          <Link href="/login">
+            <Button fontSize={"sm"} fontWeight={400} variant={"link"}>
+              Sign In
+            </Button>
+          </Link>
+        )}
+        <Link href="/signup">
           <Button
             as={"a"}
             display={{ base: "none", md: "inline-flex" }}
@@ -89,13 +106,13 @@ export default function WithSubnavigation() {
             fontWeight={600}
             color={"white"}
             bg={"pink.400"}
-            href={"/signup"}
             _hover={{
               bg: "pink.300",
             }}
           >
             Sign Up
           </Button>
+        </Link>
         </Stack>
       </Flex>
 
