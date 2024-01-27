@@ -1,40 +1,77 @@
-"use client";
+'use client'
 
-import Image from "next/image";
-import { useEffect, useState } from "react";
-import Navbar from "./components/Navbar";
-import Hero from "./components/Hero";
+import { useState } from 'react'
+import { useAuth } from './AuthContext'
+import { useRouter } from 'next/navigation'
+import { Input, Button, Box, FormControl, FormLabel } from '@chakra-ui/react'
+import LandingPageNavbar from './components/LandingPageNavbar'
+import LandingPageFooter from './components/LandingPageFooter'
 
-export default function Home() {
-  const [data, setData] = useState(null);
-  const [isLoading, setLoading] = useState(true);
-  const loungeData = data?.lounges?.data;
+const Home = () => {
+  const { login } = useAuth()
+  const [email, setEmail] = useState('')
+  const [password, setPassword] = useState('')
+  const router = useRouter()
 
-  useEffect(() => {
-    fetch("http://localhost:4000/")
-      .then((res) => res.json())
-      .then((data) => {
-        setData(data);
-        setLoading(false);
-      });
-  }, []);
-
-  if (isLoading) return <p>Loading...</p>;
-  if (!data) return <p>No lounge data</p>;
+  const handleLogin = async (e) => {
+    e.preventDefault()
+    try {
+      await login(email, password)
+      router.push('/main')
+    } catch (error) {
+      console.error('Login error:', error)
+    }
+  }
 
   return (
-    <main>
-      <Navbar />;{/* <Hero /> */}
-      <ul>
-        {loungeData.map((lounge) => (
-          <li key={lounge.id}>
-            <h1>{lounge.attributes.name}</h1>
-            {lounge.attributes.email}
-            {lounge.attributes.phone}
-            {lounge.attributes.description}
-          </li>
-        ))}
-      </ul>
-    </main>
-  );
+    <>
+      <LandingPageNavbar />
+      <Box
+        display="flex"
+        justifyContent="center"
+        alignItems="center"
+        h="100vh"
+        bg="gray.100"
+      >
+        <Box
+          w="full"
+          maxW="md"
+          p={8}
+          borderWidth={1}
+          borderRadius="lg"
+          boxShadow="lg"
+          bg="gray.50"
+        >
+          <form onSubmit={handleLogin}>
+            <FormControl id="email" mb={4}>
+              <FormLabel>Email</FormLabel>
+              <Input
+                type="email"
+                placeholder="Enter your email"
+                variant="outlined"
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
+              />
+            </FormControl>
+            <FormControl id="password" mb={6}>
+              <FormLabel>Password</FormLabel>
+              <Input
+                type="password"
+                placeholder="Enter your password"
+                variant="outlined"
+                value={password}
+                onChange={(e) => setPassword(e.target.value)}
+              />
+            </FormControl>
+            <Button bg="orange.500" color="white" type="submit" w="full">
+              Sign In
+            </Button>
+          </form>
+        </Box>
+      </Box>
+      <LandingPageFooter />
+    </>
+  )
 }
+
+export default Home
