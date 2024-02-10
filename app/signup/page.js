@@ -1,25 +1,38 @@
-"use client";
-import { useRef } from "react";
-import Navbar from "../components/Navbar";
+'use client'
+import { useRef } from 'react'
+import { useRouter } from 'next/navigation'
+import {
+  Input,
+  Button,
+  Box,
+  FormControl,
+  FormLabel,
+  Heading,
+  Text,
+} from '@chakra-ui/react'
+import LandingPageNavbar from '../components/LandingPageNavbar'
+import LandingPageFooter from '../components/LandingPageFooter'
+import Link from 'next/link'
 
-export default function SignupPage() {
-  const firstNameInputRef = useRef();
-  const lastNameInputRef = useRef();
-  const emailInputRef = useRef();
-  const dateOfBirthInputRef = useRef();
-  const passwordInputRef = useRef();
-  const passwordConfirmationInputRef = useRef();
+const SignupPage = () => {
+  const firstNameInputRef = useRef()
+  const lastNameInputRef = useRef()
+  const emailInputRef = useRef()
+  const dateOfBirthInputRef = useRef()
+  const passwordInputRef = useRef()
+  const passwordConfirmationInputRef = useRef()
+  const router = useRouter()
 
   function submitHandler(event) {
-    event.preventDefault();
+    event.preventDefault()
 
-    const enteredFirstName = firstNameInputRef.current.value;
-    const enteredLastName = lastNameInputRef.current.value;
-    const enteredEmail = emailInputRef.current.value;
-    const enteredDateOfBirth = dateOfBirthInputRef.current.value;
-    const enteredPassword = passwordInputRef.current.value;
+    const enteredFirstName = firstNameInputRef.current.value
+    const enteredLastName = lastNameInputRef.current.value
+    const enteredEmail = emailInputRef.current.value
+    const enteredDateOfBirth = dateOfBirthInputRef.current.value
+    const enteredPassword = passwordInputRef.current.value
     const enteredPasswordConfirmation =
-      passwordConfirmationInputRef.current.value;
+      passwordConfirmationInputRef.current.value
 
     const newUserData = {
       first_name: enteredFirstName,
@@ -27,66 +40,118 @@ export default function SignupPage() {
       email: enteredEmail,
       date_of_birth: enteredDateOfBirth,
       password: enteredPassword,
-    };
+      password_confirmation: enteredPasswordConfirmation,
+    }
 
-    fetch("http://localhost:4000/signup", {
-      method: "POST",
+    fetch('http://localhost:4000/signup', {
+      method: 'POST',
       body: JSON.stringify({ user: newUserData }),
       headers: {
-        "Content-Type": "application/json",
+        'Content-Type': 'application/json',
       },
     }).then(() => {
-      console.log("SUCCESS!!!!");
-    });
+      router.push('/login')
+    })
   }
 
   return (
-    <div>
-      <Navbar />
-      <form onSubmit={submitHandler}>
-        <div>
-          <label htmlFor="first-name">First Name</label>
-          <input type="text" required id="first-name" ref={firstNameInputRef} />
-        </div>
-        <div>
-          <label htmlFor="last-name">Last Name</label>
-          <input type="text" required id="last-name" ref={lastNameInputRef} />
-        </div>
-        <div>
-          <label htmlFor="email">Email</label>
-          <input type="email" required id="email" ref={emailInputRef} />
-        </div>
-        <div>
-          <label htmlFor="date-of-birth">Date of Birth</label>
-          <input
-            type="date"
-            required
-            id="date-of-birth"
-            ref={dateOfBirthInputRef}
-          />
-        </div>
-        <div>
-          <label htmlFor="password">Password</label>
-          <input
-            type="password"
-            required
-            id="password"
-            ref={passwordInputRef}
-          />
-        </div>
-        <div>
-          <label htmlFor="password-confirmation">Password Confirmation</label>
-          <input
-            type="password"
-            required
-            id="password-confirmation"
-            ref={passwordConfirmationInputRef}
-          />
-        </div>
-        <div>
-          <button>Sign up</button>
-        </div>
-      </form>
-    </div>
-  );
+    <>
+      <LandingPageNavbar />
+      <Box
+        display="flex"
+        justifyContent="center"
+        alignItems="center"
+        h="100vh"
+        bg="gray.100"
+      >
+        <Box
+          w="full"
+          maxW="md"
+          p={8}
+          borderWidth={1}
+          borderRadius="lg"
+          boxShadow="lg"
+          bg="gray.50"
+        >
+          <Heading as="h2" size="lg" mb={6} textAlign="center">
+            Sign Up
+          </Heading>
+          <form onSubmit={submitHandler}>
+            <FormControl id="first-name" mb={4}>
+              <FormLabel>First Name</FormLabel>
+              <Input
+                type="text"
+                placeholder="First Name"
+                variant="outlined"
+                required
+                ref={firstNameInputRef}
+              />
+            </FormControl>
+            <FormControl id="last-name" mb={4}>
+              <FormLabel>Last Name</FormLabel>
+              <Input
+                type="text"
+                placeholder="Last Name"
+                variant="outlined"
+                required
+                ref={lastNameInputRef}
+              />
+            </FormControl>
+            <FormControl id="email" mb={4}>
+              <FormLabel>Email</FormLabel>
+              <Input
+                type="email"
+                placeholder="Email"
+                variant="outlined"
+                required
+                ref={emailInputRef}
+              />
+            </FormControl>
+            <FormControl id="date-of-birth" mb={4}>
+              <FormLabel>Date of Birth</FormLabel>
+              <Input
+                type="date"
+                placeholder="Date of Birth"
+                variant="outlined"
+                required
+                ref={dateOfBirthInputRef}
+              />
+            </FormControl>
+            <FormControl id="password" mb={6}>
+              <FormLabel>Password</FormLabel>
+              <Input
+                type="password"
+                placeholder="Enter your password"
+                variant="outlined"
+                required
+                ref={passwordInputRef}
+              />
+            </FormControl>
+            <FormControl id="password-confirmation" mb={6}>
+              <FormLabel>Password Confirmation</FormLabel>
+              <Input
+                type="password"
+                placeholder="Confirm Password"
+                variant="outlined"
+                required
+                ref={passwordConfirmationInputRef}
+              />
+            </FormControl>
+            <Button bg="orange.500" color="white" type="submit" w="full">
+              Sign In
+            </Button>
+          </form>
+          <Text mt={6}>
+            Already have an account?{' '}
+            <Link color="orange.500" href="/login">
+              <b>Login here</b>
+            </Link>
+          </Text>
+        </Box>
+      </Box>
+      <LandingPageFooter />
+    </>
+  )
 }
+
+export default SignupPage
