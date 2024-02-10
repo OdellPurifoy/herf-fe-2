@@ -1,6 +1,6 @@
 import { Flex, Heading } from '@chakra-ui/react'
 
-export default function LandingPageNavbar() {
+const LandingPageNavbar = () => {
   return (
     <Flex
       align="center"
@@ -15,3 +15,5 @@ export default function LandingPageNavbar() {
     </Flex>
   )
 }
+
+export default LandingPageNavbar
