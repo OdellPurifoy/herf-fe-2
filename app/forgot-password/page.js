@@ -1,34 +1,59 @@
 'use client'
 
 import { useState } from 'react'
-import { useAuth } from '../AuthContext'
 import { useRouter } from 'next/navigation'
 import {
+  Alert,
+  AlertIcon,
+  AlertTitle,
+  AlertDescription,
   Input,
   Button,
   Box,
   FormControl,
   FormLabel,
   Heading,
-  Text,
 } from '@chakra-ui/react'
 import LandingPageNavbar from '../components/LandingPageNavbar'
 import LandingPageFooter from '../components/LandingPageFooter'
-import Link from 'next/link'
 
-const LoginPage = () => {
-  const { login } = useAuth()
+const ForgotPasswordPage = () => {
   const [email, setEmail] = useState('')
-  const [password, setPassword] = useState('')
+  const [error, setError] = useState('')
+
   const router = useRouter()
 
-  const handleLogin = async (e) => {
+  const handleForgotPasswordSubmission = async (e) => {
     e.preventDefault()
+
     try {
-      await login(email, password)
-      router.push('/main')
+      const userData = {
+        user: {
+          email: email,
+        },
+      }
+
+      const response = await fetch('http://localhost:4000/forgot-password', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(userData),
+      })
+
+      // Ensure the request was successful (status code 2xx)
+      if (response.ok) {
+        router.push('/reset-password')
+        console.log('Successs')
+      } else {
+        const errorMessage = await response.text()
+        // console.log('RESPONSE TEXT', response.text())
+        // console.log('RESPONSE', response)
+        setError(errorMessage)
+      }
     } catch (error) {
       console.error('Login error:', error)
+      // setError('An error occurred. Please try again later.')
     }
   }
 
@@ -52,9 +77,15 @@ const LoginPage = () => {
           bg="gray.50"
         >
           <Heading as="h2" size="lg" mb={6} textAlign="center">
-            Log In
+            Forgot Password
           </Heading>
-          <form onSubmit={handleLogin}>
+          {error && (
+            <Alert status="error" mb={4}>
+              <AlertIcon />
+              <AlertDescription>{error}</AlertDescription>
+            </Alert>
+          )}
+          <form onSubmit={handleForgotPasswordSubmission}>
             <FormControl id="email" mb={4}>
               <FormLabel>Email</FormLabel>
               <Input
@@ -63,28 +94,13 @@ const LoginPage = () => {
                 variant="outlined"
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
-              />
-            </FormControl>
-            <FormControl id="password" mb={6}>
-              <FormLabel>Password</FormLabel>
-              <Input
-                type="password"
-                placeholder="Enter your password"
-                variant="outlined"
-                value={password}
-                onChange={(e) => setPassword(e.target.value)}
+                required
               />
             </FormControl>
             <Button bg="orange.500" color="white" type="submit" w="full">
-              Log In
+              Submit
             </Button>
           </form>
-          <Text mt={6}>
-            Forgot your password?{' '}
-            <Link color="orange.500" href="/forgot-password">
-              <b>Click here to reset</b>
-            </Link>
-          </Text>
         </Box>
       </Box>
       <LandingPageFooter />
@@ -92,4 +108,4 @@ const LoginPage = () => {
   )
 }
 
-export default LoginPage
+export default ForgotPasswordPage

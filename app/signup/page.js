@@ -1,11 +1,12 @@
 'use client'
-import { useRef } from 'react'
+import { useRef, useState } from 'react'
 import { useRouter } from 'next/navigation'
 import {
   Input,
   Button,
   Box,
   FormControl,
+  FormErrorMessage,
   FormLabel,
   Heading,
   Text,
@@ -15,32 +16,25 @@ import LandingPageFooter from '../components/LandingPageFooter'
 import Link from 'next/link'
 
 const SignupPage = () => {
-  const firstNameInputRef = useRef()
-  const lastNameInputRef = useRef()
-  const emailInputRef = useRef()
-  const dateOfBirthInputRef = useRef()
-  const passwordInputRef = useRef()
-  const passwordConfirmationInputRef = useRef()
+  const [firstName, setFirstName] = useState('')
+  const [lastName, setLastName] = useState('')
+  const [email, setEmail] = useState('')
+  const [dateOfBirth, setDateOfBirth] = useState('')
+  const [password, setPassword] = useState('')
+  const [passwordConfirmation, setPasswordConfirmation] = useState('')
+  const [isError, setIsError] = useState(true)
   const router = useRouter()
 
   function submitHandler(event) {
     event.preventDefault()
 
-    const enteredFirstName = firstNameInputRef.current.value
-    const enteredLastName = lastNameInputRef.current.value
-    const enteredEmail = emailInputRef.current.value
-    const enteredDateOfBirth = dateOfBirthInputRef.current.value
-    const enteredPassword = passwordInputRef.current.value
-    const enteredPasswordConfirmation =
-      passwordConfirmationInputRef.current.value
-
     const newUserData = {
-      first_name: enteredFirstName,
-      last_name: enteredLastName,
-      email: enteredEmail,
-      date_of_birth: enteredDateOfBirth,
-      password: enteredPassword,
-      password_confirmation: enteredPasswordConfirmation,
+      first_name: firstName,
+      last_name: lastName,
+      email: email,
+      date_of_birth: dateOfBirth,
+      password: password,
+      password_confirmation: passwordConfirmation,
     }
 
     fetch('http://localhost:4000/signup', {
@@ -83,19 +77,22 @@ const SignupPage = () => {
                 type="text"
                 placeholder="First Name"
                 variant="outlined"
+                onChange={(e) => setFirstName(e.target.value)}
                 required
-                ref={firstNameInputRef}
               />
             </FormControl>
             <FormControl id="last-name" mb={4}>
               <FormLabel>Last Name</FormLabel>
               <Input
                 type="text"
-                placeholder="Last Name"
                 variant="outlined"
+                value={lastName}
+                onChange={(e) => setLastName(e.target.value)}
                 required
-                ref={lastNameInputRef}
               />
+              {isError && (
+                <FormErrorMessage>Last Name is required.</FormErrorMessage>
+              )}
             </FormControl>
             <FormControl id="email" mb={4}>
               <FormLabel>Email</FormLabel>
@@ -103,8 +100,11 @@ const SignupPage = () => {
                 type="email"
                 placeholder="Email"
                 variant="outlined"
+                onChange={(e) => {
+                  setEmail(e.target.value)
+                  setIsError(e.target.value.trim() === '')
+                }}
                 required
-                ref={emailInputRef}
               />
             </FormControl>
             <FormControl id="date-of-birth" mb={4}>
@@ -113,8 +113,8 @@ const SignupPage = () => {
                 type="date"
                 placeholder="Date of Birth"
                 variant="outlined"
+                onChange={(e) => setDateOfBirth(e.target.value)}
                 required
-                ref={dateOfBirthInputRef}
               />
             </FormControl>
             <FormControl id="password" mb={6}>
@@ -123,8 +123,8 @@ const SignupPage = () => {
                 type="password"
                 placeholder="Enter your password"
                 variant="outlined"
+                onChange={(e) => setPassword(e.target.value)}
                 required
-                ref={passwordInputRef}
               />
             </FormControl>
             <FormControl id="password-confirmation" mb={6}>
@@ -133,8 +133,8 @@ const SignupPage = () => {
                 type="password"
                 placeholder="Confirm Password"
                 variant="outlined"
+                onChange={(e) => setPasswordConfirmation(e.target.value)}
                 required
-                ref={passwordConfirmationInputRef}
               />
             </FormControl>
             <Button bg="orange.500" color="white" type="submit" w="full">
