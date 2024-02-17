@@ -18,14 +18,11 @@ export default function SplitScreen() {
       <Box maxW="container.sm" px={6}>
         {/* Adjust 'container.sm' to your preferred width */}
         <Heading as="h1" size="xl" mb={4}>
-          Welcome to Our Website
+          Welcome to Herf
         </Heading>
         <Text fontSize="lg" mb={6}>
           Discover the finest selection of cigars
         </Text>
-        <Button colorScheme="brand" size="lg">
-          Explore Now
-        </Button>
       </Box>
     </Box>
   )
