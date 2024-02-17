@@ -11,7 +11,7 @@ import { ArrowUpIcon } from '@chakra-ui/icons'
 
 const EngagementFeatureCard = () => {
   return (
-    <Card maxW="sm">
+    <Card maxW="sm" variant="outline">
       <CardBody>
         <ArrowUpIcon w={10} h={10} color="orange.500" />
         <Stack mt="6" spacing="3">

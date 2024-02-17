@@ -11,7 +11,7 @@ import { PhoneIcon } from '@chakra-ui/icons'
 
 const TextFeatureCard = () => {
   return (
-    <Card maxW="sm">
+    <Card maxW="sm" variant="outline">
       <CardBody>
         <PhoneIcon w={10} h={10} color="orange.500" />
         <Stack mt="6" spacing="3">

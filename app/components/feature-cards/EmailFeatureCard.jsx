@@ -11,7 +11,7 @@ import { EmailIcon } from '@chakra-ui/icons'
 
 const EmailFeatureCard = () => {
   return (
-    <Card maxW="sm">
+    <Card maxW="sm" variant="outline">
       <CardBody>
         <EmailIcon w={10} h={10} color="orange.500" />
         <Stack mt="6" spacing="3">
