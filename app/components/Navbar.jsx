@@ -19,23 +19,16 @@ import {
   useBreakpointValue,
   useDisclosure,
 } from '@chakra-ui/react'
-import {
-  HamburgerIcon,
-  CloseIcon,
-  ChevronDownIcon,
-  ChevronRightIcon,
-} from '@chakra-ui/icons'
+import { HamburgerIcon, CloseIcon, ChevronDownIcon } from '@chakra-ui/icons'
 
 export default function WithSubnavigation() {
   const { isOpen, onToggle } = useDisclosure()
   const { user, logout } = useAuth()
   const router = useRouter()
 
-  console.log('USER AVAILABLE IN NAV', user)
-
   const handleLogout = async () => {
     await logout()
-    router.push('/logout')
+    router.push('/login')
   }
 
   return (
@@ -90,7 +83,7 @@ export default function WithSubnavigation() {
             <Button
               onClick={handleLogout}
               fontSize={'sm'}
-              fontWeight={400}
+              fontWeight={600}
               variant={'link'}
             >
               Logout
@@ -103,21 +96,32 @@ export default function WithSubnavigation() {
               </Button>
             </Link>
           )}
-          <Link href="/signup">
-            <Button
-              as={'a'}
-              display={{ base: 'none', md: 'inline-flex' }}
-              fontSize={'sm'}
-              fontWeight={600}
-              color={'white'}
-              bg={'orange.500'}
-              _hover={{
-                bg: 'orange.200',
-              }}
-            >
-              Sign Up
-            </Button>
-          </Link>
+          {user ? (
+            <Flex alignItems="center" gap="1">
+              <Text fontSize="sm" as="b">
+                Hi,
+              </Text>
+              <Text fontSize="sm" as="b">
+                {user.first_name}
+              </Text>
+            </Flex>
+          ) : (
+            <Link href="/signup">
+              <Button
+                as={'a'}
+                display={{ base: 'none', md: 'inline-flex' }}
+                fontSize={'sm'}
+                fontWeight={600}
+                color={'white'}
+                bg={'orange.500'}
+                _hover={{
+                  bg: 'orange.200',
+                }}
+              >
+                Sign Up
+              </Button>
+            </Link>
+          )}
         </Stack>
       </Flex>
 
@@ -187,13 +191,13 @@ const DesktopSubNav = ({ label, href, subLabel }) => {
       display={'block'}
       p={2}
       rounded={'md'}
-      _hover={{ bg: useColorModeValue('pink.50', 'gray.900') }}
+      _hover={{ bg: useColorModeValue('gray.50', 'gray.900') }}
     >
       <Stack direction={'row'} align={'center'}>
         <Box>
           <Text
             transition={'all .3s ease'}
-            _groupHover={{ color: 'pink.400' }}
+            _groupHover={{ color: 'gray.400' }}
             fontWeight={500}
           >
             {label}
@@ -208,9 +212,7 @@ const DesktopSubNav = ({ label, href, subLabel }) => {
           justify={'flex-end'}
           align={'center'}
           flex={1}
-        >
-          <Icon color={'pink.400'} w={5} h={5} as={ChevronRightIcon} />
-        </Flex>
+        ></Flex>
       </Stack>
     </Box>
   )
@@ -287,6 +289,10 @@ const NAV_ITEMS = [
   {
     label: 'My Lounge',
     children: [
+      {
+        label: 'Lounge Profile',
+        href: '#',
+      },
       {
         label: 'Events',
         href: '#',
