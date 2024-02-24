@@ -1,7 +1,6 @@
 'use client'
 
 import {
-  Box,
   Card,
   CardBody,
   CardFooter,
@@ -10,8 +9,11 @@ import {
   Button,
   Text,
   Center,
+  List,
+  ListItem,
+  ListIcon,
 } from '@chakra-ui/react'
-import { AddIcon, CheckIcon } from '@chakra-ui/icons'
+import { AddIcon, CheckCircleIcon } from '@chakra-ui/icons'
 import {
   Modal,
   ModalOverlay,
@@ -56,11 +58,9 @@ const CommunityFeatureCard = () => {
           <ModalHeader>Grow your Community</ModalHeader>
           <ModalCloseButton />
           <ModalBody>
-            <Text>
-              <CheckIcon color="orange.500" mr="2" />
-              <b>Foster Community Growth: </b>
-              <br />
-              <p>
+            <List spacing={3}>
+              <ListItem>
+                <ListIcon as={CheckCircleIcon} color="orange.500" />
                 Our comprehensive suite of features empowers cigar lounge owners
                 to cultivate a vibrant and engaged community of enthusiasts.
                 Seamlessly connect with members through personalized email and
@@ -70,9 +70,9 @@ const CommunityFeatureCard = () => {
                 event creation tools, lounge owners can attract new patrons and
                 strengthen bonds with existing members. Join us today and unlock
                 the potential to grow your lounge community and create lasting
-                connections with cigar aficionados.{' '}
-              </p>
-            </Text>
+                connections with cigar aficionados.
+              </ListItem>
+            </List>
           </ModalBody>
           <ModalFooter>
             <Button colorScheme="gray" mr={3} onClick={onClose}>

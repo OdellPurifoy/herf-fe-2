@@ -1,7 +1,6 @@
 'use client'
 
 import {
-  Box,
   Card,
   CardBody,
   CardFooter,
@@ -10,8 +9,11 @@ import {
   Button,
   Text,
   Center,
+  List,
+  ListItem,
+  ListIcon,
 } from '@chakra-ui/react'
-import { ArrowUpIcon, CheckIcon } from '@chakra-ui/icons'
+import { ArrowUpIcon, CheckCircleIcon } from '@chakra-ui/icons'
 import {
   Modal,
   ModalOverlay,
@@ -55,11 +57,9 @@ const EngagementFeatureCard = () => {
           <ModalHeader>Increase Engagement & Attendance</ModalHeader>
           <ModalCloseButton />
           <ModalBody>
-            <Text>
-              <CheckIcon color="orange.500" mr="2" />
-              <b>Transform Your Lounge Experience: </b>
-              <br />
-              <p>
+            <List spacing={3}>
+              <ListItem>
+                <ListIcon as={CheckCircleIcon} color="orange.500" />
                 Elevate your cigar lounge to new heights of engagement and
                 attendance with our powerful suite of features. Seamlessly
                 connect with members through personalized email and text
@@ -71,8 +71,8 @@ const EngagementFeatureCard = () => {
                 and foster a thriving community of enthusiasts. Join today and
                 experience the difference in member engagement and attendance
                 for your lounge.
-              </p>
-            </Text>
+              </ListItem>
+            </List>
           </ModalBody>
           <ModalFooter>
             <Button colorScheme="gray" mr={3} onClick={onClose}>
