@@ -1,5 +1,6 @@
+'use client'
+
 import {
-  Box,
   Card,
   CardBody,
   CardFooter,
@@ -8,8 +9,11 @@ import {
   Button,
   Text,
   Center,
+  List,
+  ListItem,
+  ListIcon,
 } from '@chakra-ui/react'
-import { CalendarIcon, CheckIcon } from '@chakra-ui/icons'
+import { CalendarIcon, CheckCircleIcon } from '@chakra-ui/icons'
 import {
   Modal,
   ModalOverlay,
@@ -32,9 +36,9 @@ const CreateEventsFeatureCard = () => {
           <Stack mt="6" spacing="3">
             <Heading size="md">Create Events and Special Offers</Heading>
             <Text>
-              Build a variety of events ranging from Live Music, Holiday,
-              Members Only, Spirit Tasting and more. You can also create Special
-              offers as well! Buy One, Get One, Store Discounts and Bulk deals.
+              Elevate your establishment's allure and engage enthusiasts with
+              our cutting-edge feature: intuitive event and offer management
+              tools designed to captivate and entice your audience.
             </Text>
           </Stack>
         </CardBody>
@@ -57,58 +61,37 @@ const CreateEventsFeatureCard = () => {
           </ModalHeader>
           <ModalCloseButton />
           <ModalBody>
-            <Text>
-              <CheckIcon color="orange.500" mr="2" />
-              <b>Description: </b>
-              <br />
-              <p>
-                Calling all cigar lounge proprietors! Elevate your
-                establishment's allure and engage enthusiasts with our
-                cutting-edge feature: intuitive event and offer management tools
-                designed to captivate and entice your audience.
-              </p>
-              <Box mb={4} />
-              <CheckIcon color="orange.500" mr="2" />
-              <b>Create Memorable Experiences: </b>
-              <br />
-              <p>
+            <List spacing={3}>
+              <ListItem>
+                <ListIcon as={CheckCircleIcon} color="orange.500" />
                 Curate unforgettable experiences for your patrons with seamless
                 event creation and management. From exclusive cigar tastings to
                 live music nights, effortlessly plan and promote events that
                 leave a lasting impression on attendees.
-              </p>
-              <Box mb={4} />
-              <CheckIcon color="orange.500" mr="2" />
-              <b>Showcase Special Offers: </b>
-              <br />
-              <p>
+              </ListItem>
+              <ListItem>
+                <ListIcon as={CheckCircleIcon} color="orange.500" />
                 Attract cigar aficionados with enticing special offers and
                 promotions tailored to their preferences. Showcase limited-time
                 discounts, bundle deals, and VIP packages, enticing visitors to
                 indulge in the luxury and hospitality your lounge provides.
-              </p>
-              <Box mb={4} />
-              <CheckIcon color="orange.500" mr="2" />
-              <b>Foster Loyalty and Engagement: </b>
-              <br />
-              <p>
+              </ListItem>
+              <ListItem>
+                <ListIcon as={CheckCircleIcon} color="orange.500" />
                 Nurture lasting relationships with your patrons by providing
                 them with exclusive access to curated events and irresistible
                 offers. Cultivate a sense of community and loyalty among
                 enthusiasts who appreciate the sophistication and camaraderie
                 your lounge offers.
-              </p>
-              <Box mb={4} />
-              <CheckIcon color="orange.500" mr="2" />
-              <b>Empower Your Lounge Today: </b>
-              <br />
-              <p>
+              </ListItem>
+              <ListItem>
+                <ListIcon as={CheckCircleIcon} color="orange.500" />
                 Unlock the potential of your lounge and ignite excitement among
                 cigar enthusiasts. Sign up now to access our comprehensive event
                 and offer management tools, and take your lounge to new heights
                 of engagement, satisfaction, and success.
-              </p>
-            </Text>
+              </ListItem>
+            </List>
           </ModalBody>
           <ModalFooter>
             <Button colorScheme="gray" mr={3} onClick={onClose}>
