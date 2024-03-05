@@ -291,7 +291,7 @@ const NAV_ITEMS = [
     children: [
       {
         label: 'Lounge Profile',
-        href: '#',
+        href: '/build-lounge',
       },
       {
         label: 'Events',
